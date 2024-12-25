@@ -2,7 +2,7 @@ package fonts
 
 import "fmt"
 
-func windowsFonts() map[string]string {
+func windowsFonts(fontName string) (string, error) {
 	fmt.Println("Font fetching is not implemented for windows yet")
-	return nil
+	return fontName, nil
 }

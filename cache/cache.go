@@ -2,7 +2,6 @@ package cache
 
 import (
 	"encoding/json"
-	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -49,7 +48,6 @@ func verifyCache(payload CachePayload) *cache {
 func (p *CachePayload) updateCache() *cache {
 	newCache := &cache{FontPath: f.GetFontPath(p.FontName), FontName: p.FontName}
 	if err := writeCache(*newCache); err != nil {
-		fmt.Println(err)
 		log.Println("Error: Could not write cache")
 	}
 	return newCache

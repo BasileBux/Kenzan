@@ -4,6 +4,7 @@ import (
 	"os"
 	"path"
 	"runtime"
+	"slices"
 	"strings"
 
 	u "github.com/basileb/kenzan/utils"
@@ -11,11 +12,24 @@ import (
 
 const FALLBACK_FONT string = "kenzan/fonts/GeistMono-Regular.otf"
 
+type font struct {
+	Path   string
+	Name   string
+	Styles []string
+}
+
 func GetFontPath(fontName string) string {
 	if u.FileExists(fontName) {
 		return fontName // fontName is a file path
 	}
 	var fontPath string
+	if fontName == "" {
+		fontPath, err := os.UserConfigDir()
+		if err != nil {
+			panic("Could not find os config file")
+		}
+		return path.Join(fontPath, FALLBACK_FONT)
+	}
 	var err error
 	switch runtime.GOOS {
 	case "linux":
@@ -36,4 +50,14 @@ func GetFontPath(fontName string) string {
 	}
 
 	return fontPath
+}
+
+func findFontStyle(fonts []font, style string) []font {
+	var foundFonts []font
+	for _, f := range fonts {
+		if slices.Contains(f.Styles, style) {
+			foundFonts = append(foundFonts, f)
+		}
+	}
+	return foundFonts
 }

@@ -4,15 +4,8 @@ import (
 	"bytes"
 	"fmt"
 	"os/exec"
-	"slices"
 	"strings"
 )
-
-type font struct {
-	Path   string
-	Name   string
-	Styles []string
-}
 
 func linuxFonts(fontName string) (string, error) {
 	fonts, err := getLinuxFontList(fontName)
@@ -23,11 +16,11 @@ func linuxFonts(fontName string) (string, error) {
 	if len(fonts) == 1 {
 		return fonts[0].Path, nil
 	}
-	return getDefaultFont(fonts)
+	return getLinuxDefaultFont(fonts)
 }
 
 // Rules for what a default font is are in docs/fonts.md
-func getDefaultFont(fonts []font) (string, error) {
+func getLinuxDefaultFont(fonts []font) (string, error) {
 	regularFonts := findFontStyle(fonts, "Regular")
 	if len(regularFonts) == 1 {
 		return regularFonts[0].Path, nil
@@ -47,13 +40,13 @@ func getDefaultFont(fonts []font) (string, error) {
 	var mediumFonts []font
 	mediumFonts = findFontStyle(fonts, "Medium")
 	if len(mediumFonts) != 1 && len(regularFonts) == 0 {
-		return findDefaultFileName(fonts)
+		return findLinuxDefaultFileName(fonts)
 	} else {
 		return mediumFonts[0].Path, nil
 	}
 }
 
-func findDefaultFileName(fonts []font) (string, error) {
+func findLinuxDefaultFileName(fonts []font) (string, error) {
 	var validFonts []font
 	for _, f := range fonts {
 		if strings.Contains(f.Path, "Regular") {
@@ -73,16 +66,6 @@ func findDefaultFileName(fonts []font) (string, error) {
 		return validFonts[0].Path, nil
 	}
 	return fonts[0].Path, fmt.Errorf("Could not determine default font. Using something.")
-}
-
-func findFontStyle(fonts []font, style string) []font {
-	var foundFonts []font
-	for _, f := range fonts {
-		if slices.Contains(f.Styles, style) {
-			foundFonts = append(foundFonts, f)
-		}
-	}
-	return foundFonts
 }
 
 func getLinuxFontList(fontName string) ([]font, error) {

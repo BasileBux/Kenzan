@@ -22,3 +22,4 @@ Invalidation: When this doesn't correspond to the one in the user config file\
     - [self](#font-name)
 Name: `font_name`\
 Type: `string`\
+

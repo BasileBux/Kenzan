@@ -187,6 +187,10 @@ func main() {
 		if rl.IsWindowResized() {
 			state.ViewPortSize.X = float32(rl.GetRenderWidth())
 			state.ViewPortSize.Y = float32(rl.GetRenderHeight())
+			if runtime.GOOS == "darwin" {
+				state.ViewPortSize.X /= 2
+				state.ViewPortSize.Y /= 2
+			}
 
 			state.ViewPortSteps.X = int(state.ViewPortSize.X / (userStyle.CharSize.X + userStyle.FontSpacing))
 			state.ViewPortSteps.Y = int(state.ViewPortSize.Y / (userStyle.CharSize.Y + userStyle.FontSpacing))

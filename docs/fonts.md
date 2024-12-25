@@ -14,7 +14,13 @@ We use the tool `fontconfig` and the command `fc-list`, this gives a list of `fi
 
 ## macOS
 
-We use `mdfind` but I cannot test this because I don't have a mac. 
+We won't use `mdfind` as I don't find it really useful. On macOS, fonts can be located: 
+- `/System/Library/Fonts/` 
+- `/System/Library/Fonts/Supplemental/`
+- `/Library/Fonts/`
+- `~/Library/Fonts/`
+This won't allow to access fonts installed by 3rd party software by name. But path is always available.\
+I use `mdls` to get info on the fonts. This gives XML which I have to parse and do stuff with. This is a really long process. 
 
 ## Window
 

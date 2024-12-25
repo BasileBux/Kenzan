@@ -7,10 +7,11 @@ The current features are really basic. Move with arrows, write text, delete text
 I also implemented syntax highlighting using [Tree-sitter](https://tree-sitter.github.io/tree-sitter/). For, now there is only `c`, but I want to implement other languages I know when I have time. If you want to throw a quick pull request and implement syntax highlighting for a language you like, you are more than welcome to do so. (I find it pretty boring actually)
 
 > [!WARNING]
-> I put the [Geist mono](https://vercel.com/font) nerd font in the project to use as default font temporarily. I do not own this font and have nothing to do with it. I just like how it looks. 
-
-> [!WARNING]
 > Unicode is not supported for now. I have solved my issue so it might come in the future but not yet. So if you type non-ascii characters, they will simply be ignored
+
+## Fallback font
+
+As fallback font, I chose the [Geist mono font](https://vercel.com/font). I do not own the font in any way. The font is licensed under the SIL Open Font License. For more information, you can find the font and license in the [/fonts/GeistMono/](https://github.com/BasileBux/Kenzan/blob/main/fonts/GeistMono/) folder. 
 
 ### Supported language syntax highlighting
 

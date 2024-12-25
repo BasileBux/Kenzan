@@ -40,11 +40,11 @@ Sub-settings: `top`, `right`, `bottom`, `left`
 
 - Description: Font family to use in the editor
 - Setting: `font_family`
-- Default: "GeistMonoNerdFont-Regular" >> to be defined. Need an easy fallback
+- Default: ""
 
 #### Options
 
-`string` values. Can be font name or path to the font file.
+`string` values. Can be font name or path to the font file. Leave empty for default. 
 
 ## Font size
 

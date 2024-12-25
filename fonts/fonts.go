@@ -1,13 +1,15 @@
 package fonts
 
 import (
-	"fmt"
+	"os"
 	"path"
 	"runtime"
 	"strings"
 
 	u "github.com/basileb/kenzan/utils"
 )
+
+const FALLBACK_FONT string = "kenzan/fonts/GeistMono-Regular.otf"
 
 func GetFontPath(fontName string) string {
 	if u.FileExists(fontName) {
@@ -25,10 +27,12 @@ func GetFontPath(fontName string) string {
 	}
 	fileExt := strings.TrimSpace(path.Ext(fontPath))
 	if err != nil || (fileExt != ".otf" && fileExt != ".ttf") {
-		// Error -> use fallback
-		fmt.Println("Using fallback")
-		fmt.Println("File ext: ", path.Ext(fontPath))
-		return fontName
+		// Using fallback
+		fontPath, err = os.UserConfigDir()
+		if err != nil {
+			panic("Could not find os config file")
+		}
+		return path.Join(fontPath, FALLBACK_FONT)
 	}
 
 	return fontPath

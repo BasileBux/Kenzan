@@ -6,6 +6,8 @@ The goal is to cache the font path and reload it every time the settings file is
 
 The only font types supported are `.ttf` and `.otf`
 
+The fallback font is located in `~/.config/kenzan/fonts/`. I chose the [GeistMono font](https://vercel.com/font). I do not own the font, I just really enjoy it. You can find the license to that font under `./fonts/GeistMono/OFL.txt` in the repo. 
+
 ## Linux
 
 We use the tool `fontconfig` and the command `fc-list`, this gives a list of `file path`: `font specs`

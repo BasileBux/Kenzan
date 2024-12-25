@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"runtime"
 	"strings"
 
 	f "github.com/basileb/kenzan/files"
@@ -66,7 +67,7 @@ func main() {
 		rl.SetConfigFlags(rl.FlagWindowHighdpi)
 	}
 
-	rl.InitWindow(800, 800, "kenzan")
+	rl.InitWindow(800, 800, "Kenzan")
 	if !rl.IsWindowReady() {
 		log.Panic("Window didn't open correctly ???")
 	}
@@ -129,6 +130,12 @@ func main() {
 		ViewPortSize: rl.Vector2{
 			X: float32(rl.GetRenderWidth()),
 			Y: float32(rl.GetRenderHeight())},
+	}
+
+	// Weird behavior with size doubled on macOS
+	if runtime.GOOS == "darwin" {
+		state.ViewPortSize.X /= 2
+		state.ViewPortSize.Y /= 2
 	}
 	state.ViewPortSteps.X = int(state.ViewPortSize.X / (userStyle.CharSize.X + userStyle.FontSpacing))
 	state.ViewPortSteps.Y = int(state.ViewPortSize.Y / (userStyle.CharSize.Y + userStyle.FontSpacing))

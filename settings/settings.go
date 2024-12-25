@@ -4,6 +4,9 @@ import (
 	_ "embed"
 	"encoding/json"
 	"os"
+	"path/filepath"
+
+	c "github.com/basileb/kenzan/cache"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
@@ -104,11 +107,11 @@ func loadUserSettings(path string) (*Settings, error) {
 }
 
 func LoadAllSettings() (*Settings, error) {
-	configDir := os.Getenv("XDG_CONFIG_HOME")
-	if configDir == "" {
-		configDir = os.ExpandEnv("$HOME/.config")
+	configDir, err := os.UserConfigDir()
+	if err != nil {
+		panic("Could not find os-specific configuration folder")
 	}
-	configDir += "/kenzan"
+	configDir = filepath.Join(configDir, "kenzan")
 
 	defaults, err := loadDefaultSettings()
 	if err != nil {
@@ -188,11 +191,12 @@ func MergeSettings(defaults *Settings, user *Settings) *Settings {
 	if user.LineHighlight != nil {
 		merged.LineHighlight = user.LineHighlight
 	}
-
-	// Merge system settings
 	if user.HighDpi != nil {
 		merged.HighDpi = user.HighDpi
 	}
+
+	cache := c.Cache(c.CachePayload{FontName: *merged.FontFamily})
+	merged.FontFamily = &cache.FontPath
 
 	return &merged
 }

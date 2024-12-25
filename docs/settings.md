@@ -1,7 +1,17 @@
 # Settings docs
 
+The location of the config files is the following: 
+- Linux: `~/.config/kenzan/`
+- MacOS: `~/Library/Application Support/kenzan/`
+- Windows: `C:\Users\<username>\Appdata\local\kenzan\`
+
+Your config file should be named one of these: 
+- settings.json
+- user.json
+- kenzan.json
+
 The settings are in json as it is really common amongst other editors and I don't mind it.
-You can access the defaults in ~/.config/kenzan/default.json to look up the global structure.
+You can access the defaults in `config_directory/default.json` to look up the global structure. This defaults file is not the one used by the app. If you modify it, it won't have any effect. Its only purpose is to give an example of how the configuration should look. 
 
 This file structure is copied from the [zed docs](https://zed.dev/docs/configuring-zed)
 
@@ -30,11 +40,11 @@ Sub-settings: `top`, `right`, `bottom`, `left`
 
 - Description: Font family to use in the editor
 - Setting: `font_family`
-- Default: "GeistMonoNerdFont-Regular"
+- Default: "GeistMonoNerdFont-Regular" >> to be defined. Need an easy fallback
 
 #### Options
 
-`string` values
+`string` values. Can be font name or path to the font file.
 
 ## Font size
 

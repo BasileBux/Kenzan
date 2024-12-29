@@ -25,8 +25,6 @@ To run it, Just execute the program and provide the path to the file you want to
 
 ## Todo
 
-- Change fonts with env vars for font folders (OS dependent good luck)
-- Get monitor refresh rate and adapt fps to it
 - `Delete key` normal behavior
 - Change between indentation with tabs and spaces + modify sizes -> indent guides
 - Text Selection

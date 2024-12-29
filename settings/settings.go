@@ -66,6 +66,7 @@ type Settings struct {
 
 	LineHighlight *bool `json:"line_highlight,omitempty"`
 	HighDpi       *bool `json:"high_dpi,omitempty"`
+	Fps           *int  `json:"fps,omitempty"`
 }
 
 //go:embed default.json
@@ -129,6 +130,8 @@ func LoadAllSettings() (*Settings, error) {
 
 func MergeSettings(defaults *Settings, user *Settings) *Settings {
 	if user == nil {
+		cache := c.Cache(c.CachePayload{FontName: *defaults.FontFamily})
+		defaults.FontFamily = &cache.FontPath
 		return defaults
 	}
 
@@ -193,6 +196,9 @@ func MergeSettings(defaults *Settings, user *Settings) *Settings {
 	}
 	if user.HighDpi != nil {
 		merged.HighDpi = user.HighDpi
+	}
+	if user.Fps != nil {
+		merged.Fps = user.Fps
 	}
 
 	cache := c.Cache(c.CachePayload{FontName: *merged.FontFamily})

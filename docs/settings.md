@@ -181,3 +181,22 @@ Positive `integer` values. Set to 0 to remove line
 
 `boolean` values. True is activated. 
 
+## FPS
+
+- Description: FPS to run the program at
+- Settings: `fps`
+- Default: 60
+
+#### Options
+
+Non-null positive `integers`. 
+
+## Performance display
+
+- Description: Show performance display
+- Settings: `performance_display`
+- Default: false
+
+#### Options
+
+`boolean`

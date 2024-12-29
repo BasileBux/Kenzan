@@ -15,8 +15,6 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
-const FPS int32 = 60
-
 func RedirectLogs() {
 	logFile, err := os.OpenFile("raylib.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
@@ -104,7 +102,7 @@ func main() {
 	rl.SetTextLineSpacing(int(userStyle.FontSpacing))
 	rl.SetTextureFilter(userStyle.Font.Texture, rl.FilterBilinear)
 	rl.SetExitKey(0)
-	rl.SetTargetFPS(FPS)
+	rl.SetTargetFPS(int32(*settings.Fps))
 
 	charSize := rl.MeasureTextEx(userStyle.Font, "a", userStyle.FontSize, userStyle.FontSpacing)
 	userStyle.CharSize = charSize
@@ -156,12 +154,15 @@ func main() {
 			float32(*settings.LineNumbers.PaddingLeft) + float32(*settings.LineNumbers.PaddingRight)
 	}
 
+	prevFocus := true
 	for !rl.WindowShouldClose() {
 
 		if !rl.IsWindowFocused() {
+			prevFocus = false
 			rl.SetTargetFPS(12)
-		} else {
-			rl.SetTargetFPS(FPS)
+		} else if !prevFocus {
+			rl.SetTargetFPS(int32(*settings.Fps))
+			prevFocus = true
 		}
 
 		terminate := input.InputManager(&userText, &state, &userStyle)

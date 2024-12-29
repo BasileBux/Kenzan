@@ -20,5 +20,7 @@
     "offset_current": true
   },
   "line_highlight": true,
-  "high_dpi": true
+  "high_dpi": true,
+  "fps": 60,
+  "performance_display": false
 }

@@ -1,5 +1,8 @@
 package fonts
 
+// Implementation for this isn't done with Core Text which would be the correct way.
+// instead, I use mdls and the implementation is really weak but it's ok to me.
+
 import (
 	"bytes"
 	"encoding/xml"

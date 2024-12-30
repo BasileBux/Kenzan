@@ -7,7 +7,7 @@ import (
 	"strings"
 	"sync"
 
-	t "github.com/basileb/kenzan/types"
+	t "github.com/basilebux/kenzan/types"
 )
 
 func getSufix(s string, separator string) (string, bool) {

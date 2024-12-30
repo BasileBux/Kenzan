@@ -1,66 +1,91 @@
 package input
 
 import (
-	r "github.com/basileb/kenzan/renderer"
-	st "github.com/basileb/kenzan/settings"
-	t "github.com/basileb/kenzan/types"
+	r "github.com/basilebux/kenzan/renderer"
+	st "github.com/basilebux/kenzan/settings"
+	t "github.com/basilebux/kenzan/types"
 )
 
-func backSpace(text *[]string, state *t.ProgramState, style *st.WindowStyle) {
-	nav := state.Nav
-	// SelectedLine is not index 0 and deleting last char so going one up
-	if len((*text)[nav.SelectedLine]) <= 0 && nav.SelectedLine > 0 {
-		// remove line
-		newText := make([]string, len(*text)-1)
-		copy(newText, (*text)[:nav.SelectedLine])
-		copy(newText[nav.SelectedLine:], (*text)[1+nav.SelectedLine:])
-		*text = newText
-
-		// move one up
-		nav.SelectedLine--
-		nav.AbsoluteSelectedRow = len((*text)[nav.SelectedLine])
-		nav.SelectedRow = nav.AbsoluteSelectedRow
-
-		r.ResetHorizontalScrollRight(float32(nav.AbsoluteSelectedRow), state, style)
-		r.ScrollUp(1, state, style)
+// Behaves exactly like "x" in vim
+func erase(text *[]string, state *t.ProgramState, style *st.WindowStyle) {
+	state.Update.SyntaxHighlight = true
+	state.SaveState = false
+	state.ForceQuit = false
+	if state.Nav.AbsoluteSelectedRow > len((*text)[state.Nav.SelectedLine]) {
+		state.Nav.AbsoluteSelectedRow = len((*text)[state.Nav.SelectedLine])
+	}
+	if state.Nav.AbsoluteSelectedRow <= 0 {
 		return
 	}
+	(*text)[state.Nav.SelectedLine] = (*text)[state.Nav.SelectedLine][:state.Nav.AbsoluteSelectedRow-1] +
+		(*text)[state.Nav.SelectedLine][state.Nav.AbsoluteSelectedRow:]
 
-	// Deleting inside and at the end of a non empty line anywhere
-	if len((*text)[nav.SelectedLine]) >= 1 && nav.AbsoluteSelectedRow > 0 {
-		if nav.AbsoluteSelectedRow > len((*text)[nav.SelectedLine]) {
-			nav.AbsoluteSelectedRow = len((*text)[nav.SelectedLine])
-		}
-
-		// At the end
-		if nav.AbsoluteSelectedRow < len((*text)[nav.SelectedLine]) {
-			(*text)[nav.SelectedLine] = (*text)[nav.SelectedLine][:nav.AbsoluteSelectedRow-1] + (*text)[nav.SelectedLine][nav.AbsoluteSelectedRow:]
-			nav.AbsoluteSelectedRow--
-			nav.SelectedRow = nav.AbsoluteSelectedRow
-
-		} else { // inside string
-			(*text)[nav.SelectedLine] = (*text)[nav.SelectedLine][:len((*text)[nav.SelectedLine])-1]
-			nav.AbsoluteSelectedRow--
-			nav.SelectedRow = nav.AbsoluteSelectedRow
-		}
-		r.ScrollLeft(1, state, style)
-
-		// inside and erasing last char
-	} else if nav.SelectedLine > 0 {
-		remaining := (*text)[nav.SelectedLine]
-		// remove line
-		newText := make([]string, len(*text)-1)
-		copy(newText, (*text)[:nav.SelectedLine])
-		copy(newText[nav.SelectedLine:], (*text)[1+nav.SelectedLine:])
-		*text = newText
-		// move and append remaining text to line up one
-		nav.SelectedLine--
-		(*text)[nav.SelectedLine] += remaining
-		nav.AbsoluteSelectedRow = len((*text)[nav.SelectedLine]) - len(remaining)
-		nav.SelectedRow = nav.AbsoluteSelectedRow
-
-		// Scroll one up and go at end of line
-		r.ResetHorizontalScrollRight(float32(nav.AbsoluteSelectedRow), state, style)
-		r.ScrollUp(1, state, style)
+	if state.Nav.AbsoluteSelectedRow > len((*text)[state.Nav.SelectedLine]) {
+		state.Nav.AbsoluteSelectedRow = len((*text)[state.Nav.SelectedLine])
 	}
+	r.ScrollLeft(1, state, style)
+	state.Nav.SelectedRow = state.Nav.AbsoluteSelectedRow
+}
+
+/*
+*  BUG: complete freeze in ../syntax_highlighting_samples/main.c on line 14
+*		when erasing ']' in "*argv[])" -> only when there is '[' on the left of it and
+*		no ')' on the right of it.
+
+*	#DEBUGGING PROCESS:
+*		- Not inside of erase() or backspace() function
+ */
+func backspace(text *[]string, state *t.ProgramState, style *st.WindowStyle) {
+	if len((*text)[state.Nav.SelectedLine]) <= 0 {
+		state.Nav.AbsoluteSelectedRow = 0
+		state.Nav.SelectedRow = state.Nav.AbsoluteSelectedRow
+	}
+	if state.Nav.AbsoluteSelectedRow <= 0 {
+		if state.Nav.SelectedLine <= 0 {
+			return
+		}
+		state.Update.SyntaxHighlight = true
+		state.SaveState = false
+		state.ForceQuit = false
+		currentLine := (*text)[state.Nav.SelectedLine]
+		begin := (*text)[:state.Nav.SelectedLine]
+		end := (*text)[state.Nav.SelectedLine+1:]
+		*text = begin
+		*text = append(*text, end...)
+		state.Nav.SelectedLine--
+		state.Nav.AbsoluteSelectedRow = len((*text)[state.Nav.SelectedLine])
+		(*text)[state.Nav.SelectedLine] += currentLine
+		r.ResetHorizontalScrollRight(float32(state.Nav.AbsoluteSelectedRow), state, style)
+		r.ScrollUp(1, state, style)
+		state.Nav.SelectedRow = state.Nav.AbsoluteSelectedRow
+		return
+	}
+	erase(text, state, style)
+	state.Nav.AbsoluteSelectedRow--
+	state.Nav.SelectedRow = state.Nav.AbsoluteSelectedRow
+}
+
+func deleteAction(text *[]string, state *t.ProgramState, style *st.WindowStyle) {
+	if state.Nav.AbsoluteSelectedRow >= len((*text)[state.Nav.SelectedLine]) {
+		if state.Nav.SelectedLine >= len(*text)-1 {
+			return
+		}
+		state.Update.SyntaxHighlight = true
+		state.SaveState = false
+		state.ForceQuit = false
+		lineToMove := (*text)[state.Nav.SelectedLine+1]
+		begin := (*text)[:state.Nav.SelectedLine+1]
+		end := (*text)[state.Nav.SelectedLine+2:]
+		*text = begin
+		*text = append(*text, end...)
+		(*text)[state.Nav.SelectedLine] += lineToMove
+		return
+	}
+	endOfLine := state.Nav.AbsoluteSelectedRow+1 >= len((*text)[state.Nav.SelectedLine])
+	state.Nav.AbsoluteSelectedRow++
+	erase(text, state, style)
+	if !endOfLine {
+		state.Nav.AbsoluteSelectedRow--
+	}
+	state.Nav.SelectedRow = state.Nav.AbsoluteSelectedRow
 }

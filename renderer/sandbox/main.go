@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	f "github.com/basileb/kenzan/files"
+	f "github.com/basilebux/kenzan/files"
 
 	tree_sitter "github.com/tree-sitter/go-tree-sitter"
 	tree_sitter_c "github.com/tree-sitter/tree-sitter-c/bindings/go"

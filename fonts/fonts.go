@@ -7,7 +7,7 @@ import (
 	"slices"
 	"strings"
 
-	u "github.com/basileb/kenzan/utils"
+	u "github.com/basilebux/kenzan/utils"
 )
 
 const FALLBACK_FONT string = "kenzan/fonts/GeistMono-Regular.otf"

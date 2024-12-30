@@ -3,8 +3,8 @@ package renderer
 import (
 	"fmt"
 
-	st "github.com/basileb/kenzan/settings"
-	t "github.com/basileb/kenzan/types"
+	st "github.com/basilebux/kenzan/settings"
+	t "github.com/basilebux/kenzan/types"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
 )

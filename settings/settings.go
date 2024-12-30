@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	c "github.com/basileb/kenzan/cache"
+	c "github.com/basilebux/kenzan/cache"
 
 	rl "github.com/gen2brain/raylib-go/raylib"
 )

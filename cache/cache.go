@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	f "github.com/basileb/kenzan/fonts"
+	f "github.com/basilebux/kenzan/fonts"
 )
 
 type cache struct {

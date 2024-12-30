@@ -7,11 +7,11 @@ import (
 	"runtime"
 	"strings"
 
-	f "github.com/basileb/kenzan/files"
-	"github.com/basileb/kenzan/input"
-	r "github.com/basileb/kenzan/renderer"
-	st "github.com/basileb/kenzan/settings"
-	t "github.com/basileb/kenzan/types"
+	f "github.com/basilebux/kenzan/files"
+	"github.com/basilebux/kenzan/input"
+	r "github.com/basilebux/kenzan/renderer"
+	st "github.com/basilebux/kenzan/settings"
+	t "github.com/basilebux/kenzan/types"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -128,6 +128,8 @@ func main() {
 		ViewPortSize: rl.Vector2{
 			X: float32(rl.GetRenderWidth()),
 			Y: float32(rl.GetRenderHeight())},
+		Terminate:    false,
+		HighlightErr: nil,
 	}
 
 	// Weird behavior with size doubled on macOS
@@ -154,6 +156,8 @@ func main() {
 			float32(*settings.LineNumbers.PaddingLeft) + float32(*settings.LineNumbers.PaddingRight)
 	}
 
+	keyMaps := input.InitDefaultKeyMaps()
+
 	prevFocus := true
 	for !rl.WindowShouldClose() {
 
@@ -165,8 +169,8 @@ func main() {
 			prevFocus = true
 		}
 
-		terminate := input.InputManager(&userText, &state, &userStyle)
-		if terminate {
+		input.InputManager(&userText, keyMaps, &state, &userStyle)
+		if state.Terminate {
 			break
 		}
 		if rl.IsKeyDown(rl.KeyLeftControl) && rl.IsKeyPressed(rl.KeyQ) {

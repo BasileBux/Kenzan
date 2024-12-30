@@ -50,6 +50,8 @@ type ProgramState struct {
 	ViewPortSize   rl.Vector2
 	ViewPortSteps  Vec2
 	Cache          Cache
+	Terminate      bool
+	HighlightErr   error
 }
 
 type Cache struct {

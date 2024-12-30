@@ -1,8 +1,8 @@
 package renderer
 
 import (
-	st "github.com/basileb/kenzan/settings"
-	t "github.com/basileb/kenzan/types"
+	st "github.com/basilebux/kenzan/settings"
+	t "github.com/basilebux/kenzan/types"
 	rl "github.com/gen2brain/raylib-go/raylib"
 	tree_sitter "github.com/tree-sitter/go-tree-sitter"
 	tree_sitter_c "github.com/tree-sitter/tree-sitter-c/bindings/go"
@@ -25,9 +25,6 @@ func RenderText(lang t.Language, text *string, state *t.ProgramState, style *st.
 			switch lang {
 			case t.C:
 				parser.SetLanguage(tree_sitter.NewLanguage(tree_sitter_c.Language()))
-
-			default:
-				break
 			}
 
 			tree := parser.Parse(code, nil)
@@ -37,10 +34,14 @@ func RenderText(lang t.Language, text *string, state *t.ProgramState, style *st.
 
 			switch lang {
 			case t.C:
-				syntaxHighlightingC(root, code, state, style)
+				state.HighlightErr = syntaxHighlightingC(root, code, state, style)
 			}
 		}
-		renderHighlight(state, style)
+		if state.HighlightErr != nil {
+			noSyntaxHighlight(text, &state.Nav.ScrollOffset, style)
+		} else {
+			renderHighlight(state, style)
+		}
 	} else {
 		noSyntaxHighlight(text, &state.Nav.ScrollOffset, style)
 	}

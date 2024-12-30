@@ -1,8 +1,8 @@
 package renderer
 
 import (
-	st "github.com/basileb/kenzan/settings"
-	t "github.com/basileb/kenzan/types"
+	st "github.com/basilebux/kenzan/settings"
+	t "github.com/basilebux/kenzan/types"
 )
 
 // Arbitrary padding to allign scroll to side
@@ -19,44 +19,39 @@ func ResetHorizontalScrollRight(lineSize float32, state *t.ProgramState, style *
 }
 
 func ScrollLeft(size int, state *t.ProgramState, style *st.WindowStyle) {
-	nav := state.Nav
-	if nav.ScrollOffset.X > float32(size-1) {
-		if nav.SelectedRow < int(nav.ScrollOffset.X+float32(LEFT_PADDING)+float32(style.Cursor.HorizontalPadding)) {
-			nav.ScrollOffset.X -= float32(size)
+	if state.Nav.ScrollOffset.X > float32(size-1) {
+		if state.Nav.SelectedRow < int(state.Nav.ScrollOffset.X+float32(LEFT_PADDING)+float32(style.Cursor.HorizontalPadding)) {
+			state.Nav.ScrollOffset.X -= float32(size)
 			state.Update.SyntaxHighlight = true
 		}
 	} else {
-		nav.ScrollOffset.X = 0
+		state.Nav.ScrollOffset.X = 0
 		state.Update.SyntaxHighlight = true
 	}
 }
 
 func ScrollRight(size int, state *t.ProgramState, style *st.WindowStyle) {
-	nav := state.Nav
-
-	if nav.AbsoluteSelectedRow > int(nav.ScrollOffset.X)+state.ViewPortSteps.X-RIGHT_PADDING-int(style.Cursor.HorizontalPadding) {
-		nav.ScrollOffset.X += float32(size)
+	if state.Nav.AbsoluteSelectedRow > int(state.Nav.ScrollOffset.X)+state.ViewPortSteps.X-RIGHT_PADDING-int(style.Cursor.HorizontalPadding) {
+		state.Nav.ScrollOffset.X += float32(size)
 		state.Update.SyntaxHighlight = true
 	}
 }
 
 func ScrollUp(size int, state *t.ProgramState, style *st.WindowStyle) {
-	nav := state.Nav
-	if int(nav.ScrollOffset.Y) > (size) {
-		if nav.SelectedLine < int(nav.ScrollOffset.Y)+int(style.Cursor.VerticalPadding)+UP_PADDING {
-			nav.ScrollOffset.Y -= float32(size)
+	if int(state.Nav.ScrollOffset.Y) > (size) {
+		if state.Nav.SelectedLine < int(state.Nav.ScrollOffset.Y)+int(style.Cursor.VerticalPadding)+UP_PADDING {
+			state.Nav.ScrollOffset.Y -= float32(size)
 			state.Update.SyntaxHighlight = true
 		}
 	} else {
-		nav.ScrollOffset.Y = 0
+		state.Nav.ScrollOffset.Y = 0
 		state.Update.SyntaxHighlight = true
 	}
 }
 
 func ScrollDown(size int, state *t.ProgramState, style *st.WindowStyle) {
-	nav := state.Nav
-	if nav.SelectedLine > int(nav.ScrollOffset.Y)+state.ViewPortSteps.Y-DOWN_PADDING-int(style.Cursor.VerticalPadding) {
-		nav.ScrollOffset.Y += float32(size)
+	if state.Nav.SelectedLine > int(state.Nav.ScrollOffset.Y)+state.ViewPortSteps.Y-DOWN_PADDING-int(style.Cursor.VerticalPadding) {
+		state.Nav.ScrollOffset.Y += float32(size)
 		state.Update.SyntaxHighlight = true
 	}
 }

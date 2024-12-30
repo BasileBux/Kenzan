@@ -1,4 +1,4 @@
-module github.com/basileb/kenzan
+module github.com/basilebux/kenzan
 
 go 1.23
 

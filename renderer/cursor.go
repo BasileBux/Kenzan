@@ -1,14 +1,15 @@
 package renderer
 
 import (
-	st "github.com/basileb/kenzan/settings"
-	t "github.com/basileb/kenzan/types"
+	st "github.com/basilebux/kenzan/settings"
+	t "github.com/basilebux/kenzan/types"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
 func CalculateCursorPos(userText []string, nav *t.NavigationData, cache *t.Cache, userStyle *st.WindowStyle) {
 	// If we're on an empty line or newline, place cursor at the start
-	if len(userText[nav.SelectedLine]) <= 0 || userText[nav.SelectedLine] == "\n" {
+	if len(userText[nav.SelectedLine]) <= 0 || userText[nav.SelectedLine] == "\n" ||
+		nav.AbsoluteSelectedRow == 0 {
 		cursorVerticalPos := int32(userStyle.PaddingTop) +
 			int32(nav.SelectedLine)*int32(userStyle.FontSize) +
 			int32(nav.SelectedLine*int(userStyle.FontSpacing)) -

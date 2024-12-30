@@ -31,6 +31,7 @@ To run it, Just execute the program and provide the path to the file you want to
 - Copy / Paste
 - Mouse support (click, select, scroll)
 - Change cursor shape
+- Implement vim motions (basic)
 - ...
 
 ## Issues

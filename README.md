@@ -32,7 +32,6 @@ To run it, Just execute the program and provide the path to the file you want to
 
 ## Todo
 
-- Line numbers don't work on empty files +break
 - Change between indentation with tabs and spaces + modify sizes -> indent guides
 - Text Selection
 - Copy / Paste

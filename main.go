@@ -228,7 +228,7 @@ func main() {
 		)
 
 		if state.Update.Cursor {
-			r.CalculateLineNbPositions(*settings.LineNumbers.Relative, &state, &userStyle)
+			r.CalculateLineNbPositions(*settings.LineNumbers.Relative, &userText, &state, &userStyle)
 		}
 
 		if *settings.LineNumbers.Show {

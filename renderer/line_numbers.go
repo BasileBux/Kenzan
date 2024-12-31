@@ -21,9 +21,9 @@ func RenderLineNumbers(state *t.ProgramState, style *st.WindowStyle) {
 		int32(state.ViewPortSize.Y), style.ColorTheme.Editor.Gutter.Normal)
 }
 
-func CalculateLineNbPositions(relative bool, state *t.ProgramState, style *st.WindowStyle) {
+func CalculateLineNbPositions(relative bool, text *[]string, state *t.ProgramState, style *st.WindowStyle) {
 	if !relative {
-		calculateAbsLineNbPositions(style.LineNumbers.PaddingLeft,
+		calculateAbsLineNbPositions(text, style.LineNumbers.PaddingLeft,
 			style.LineNumbers.PaddingRight, state, style)
 	} else {
 		calculateRelLineNbPositions(style.LineNumbers.PaddingLeft,
@@ -31,7 +31,7 @@ func CalculateLineNbPositions(relative bool, state *t.ProgramState, style *st.Wi
 	}
 }
 
-func calculateAbsLineNbPositions(paddingL int, paddingR int, state *t.ProgramState, style *st.WindowStyle) {
+func calculateAbsLineNbPositions(text *[]string, paddingL int, paddingR int, state *t.ProgramState, style *st.WindowStyle) {
 	state.Cache.LineNumbers.Positions = make([]rl.Vector2, 0) // empty slice
 	state.Cache.LineNumbers.Colors = make([]rl.Color, 0)      // empty slice
 	state.Cache.LineNumbers.Numbers = make([]string, 0)       // empty slice
@@ -68,7 +68,7 @@ func calculateAbsLineNbPositions(paddingL int, paddingR int, state *t.ProgramSta
 		state.Cache.LineNumbers.Positions = append(state.Cache.LineNumbers.Positions, pos)
 		state.Cache.LineNumbers.Colors = append(state.Cache.LineNumbers.Colors, currentColor)
 
-		if i+index >= len(state.SavedFile)+1 {
+		if i+index >= len(*text)+1 {
 			lineNb = "~"
 		}
 		state.Cache.LineNumbers.Numbers = append(state.Cache.LineNumbers.Numbers, lineNb)

@@ -12,6 +12,7 @@ func erase(text *[]string, state *t.ProgramState, style *st.WindowStyle) {
 	state.Update.Cursor = true
 	state.SaveState = false
 	state.ForceQuit = false
+
 	if state.Nav.AbsoluteSelectedRow > len((*text)[state.Nav.SelectedLine]) {
 		state.Nav.AbsoluteSelectedRow = len((*text)[state.Nav.SelectedLine])
 	}
@@ -29,10 +30,15 @@ func erase(text *[]string, state *t.ProgramState, style *st.WindowStyle) {
 }
 
 func backspace(text *[]string, state *t.ProgramState, style *st.WindowStyle) {
+	state.ForceQuit = false
 	if len((*text)[state.Nav.SelectedLine]) <= 0 {
 		state.Nav.AbsoluteSelectedRow = 0
 		state.Nav.SelectedRow = state.Nav.AbsoluteSelectedRow
 	}
+	state.Update.SyntaxHighlight = true
+	state.Update.Cursor = true
+	state.SaveState = false
+
 	if state.Nav.AbsoluteSelectedRow <= 0 {
 		if state.Nav.SelectedLine <= 0 {
 			return
@@ -51,6 +57,7 @@ func backspace(text *[]string, state *t.ProgramState, style *st.WindowStyle) {
 		r.ResetHorizontalScrollRight(float32(state.Nav.AbsoluteSelectedRow), state, style)
 		r.ScrollUp(1, state, style)
 		state.Nav.SelectedRow = state.Nav.AbsoluteSelectedRow
+		r.UpdateLineNumWidth(len(*text), state, style)
 		return
 	}
 	prevSel := state.Nav.AbsoluteSelectedRow
@@ -68,6 +75,7 @@ func deleteAction(text *[]string, state *t.ProgramState, style *st.WindowStyle) 
 			return
 		}
 		state.Update.SyntaxHighlight = true
+		state.Update.Cursor = true
 		state.SaveState = false
 		state.ForceQuit = false
 		lineToMove := (*text)[state.Nav.SelectedLine+1]
@@ -76,6 +84,7 @@ func deleteAction(text *[]string, state *t.ProgramState, style *st.WindowStyle) 
 		*text = begin
 		*text = append(*text, end...)
 		(*text)[state.Nav.SelectedLine] += lineToMove
+		r.UpdateLineNumWidth(len(*text), state, style)
 		return
 	}
 	endOfLine := state.Nav.AbsoluteSelectedRow+1 >= len((*text)[state.Nav.SelectedLine])

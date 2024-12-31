@@ -151,6 +151,7 @@ func main() {
 		largestLineNb := fmt.Sprintf("%d", lastLineNb)
 		largestNbSize := rl.MeasureTextEx(userStyle.Font, largestLineNb, userStyle.FontSize, userStyle.FontSpacing)
 		state.Cache.LineNumbers.Width = int32(largestNbSize.X)
+		state.Cache.LineNumbers.Len = len(largestLineNb)
 
 		userStyle.PaddingLeft += float32(state.Cache.LineNumbers.Width) +
 			float32(*settings.LineNumbers.PaddingLeft) + float32(*settings.LineNumbers.PaddingRight)

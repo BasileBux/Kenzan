@@ -68,7 +68,7 @@ func calculateAbsLineNbPositions(paddingL int, paddingR int, state *t.ProgramSta
 		state.Cache.LineNumbers.Positions = append(state.Cache.LineNumbers.Positions, pos)
 		state.Cache.LineNumbers.Colors = append(state.Cache.LineNumbers.Colors, currentColor)
 
-		if i+index >= len(state.SavedFile) {
+		if i+index >= len(state.SavedFile)+1 {
 			lineNb = "~"
 		}
 		state.Cache.LineNumbers.Numbers = append(state.Cache.LineNumbers.Numbers, lineNb)
@@ -122,5 +122,16 @@ func calculateRelLineNbPositions(paddingL int, paddingR int, state *t.ProgramSta
 		state.Cache.LineNumbers.Colors = append(state.Cache.LineNumbers.Colors, currentColor)
 		state.Cache.LineNumbers.Numbers = append(state.Cache.LineNumbers.Numbers, lineNb)
 		Ypos += nbSize.Y + style.FontSpacing
+	}
+}
+
+func UpdateLineNumWidth(num int, state *t.ProgramState, style *st.WindowStyle) {
+	newFileNb := fmt.Sprintf("%d", num)
+	if len(newFileNb) > state.Cache.LineNumbers.Len || len(newFileNb) < state.Cache.LineNumbers.Len {
+		newNbSize := rl.MeasureTextEx(style.Font, newFileNb, style.FontSize, style.FontSpacing)
+		style.PaddingLeft -= float32(state.Cache.LineNumbers.Width)
+		style.PaddingLeft += newNbSize.X
+		state.Cache.LineNumbers.Len = len(newFileNb)
+		state.Cache.LineNumbers.Width = int32(newNbSize.X)
 	}
 }

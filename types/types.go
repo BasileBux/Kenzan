@@ -74,6 +74,7 @@ type TextRenderCursor struct {
 
 type LineNumbersCache struct {
 	Width     int32
+	Len       int
 	Positions []rl.Vector2
 	Colors    []rl.Color
 	Numbers   []string

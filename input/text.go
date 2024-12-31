@@ -1,7 +1,6 @@
 package input
 
 import (
-	"fmt"
 	"strings"
 
 	r "github.com/basilebux/kenzan/renderer"
@@ -44,9 +43,9 @@ func enter(text *[]string, state *t.ProgramState, style *st.WindowStyle) {
 		state.Terminate = true
 		return
 	}
-	state.Update.Cursor = true
 	state.Update.SyntaxHighlight = true
 	state.SaveState = false
+	state.Update.Cursor = true
 
 	newText := make([]string, len(*text)+1)
 	copy(newText, (*text)[:state.Nav.SelectedLine+1])
@@ -67,12 +66,7 @@ func enter(text *[]string, state *t.ProgramState, style *st.WindowStyle) {
 	state.Nav.ScrollOffset.X = 0
 
 	// Check and change width of line numbers gutter if max nb changes
-	newFileNb := fmt.Sprintf("%d", len(*text)-1)
-	if len(newFileNb) > int(state.Cache.LineNumbers.Width) {
-		newNbSize := rl.MeasureTextEx(style.Font, newFileNb, style.FontSize, style.FontSpacing)
-		style.PaddingLeft -= float32(state.Cache.LineNumbers.Width)
-		style.PaddingLeft += newNbSize.X
-	}
+	r.UpdateLineNumWidth(len(*text), state, style)
 }
 
 func tab(text *[]string, state *t.ProgramState, style *st.WindowStyle) {

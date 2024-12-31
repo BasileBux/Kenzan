@@ -19,13 +19,20 @@ As fallback font, I chose the [Geist mono font](https://vercel.com/font). I do n
 
 ## Usage
 
-To build it all you need is golang installed on your machine. Clone the repo, execute `go mod tidy` in the directory and build it with go.
+You can build it from source. You will just need to have [golang](https://go.dev/doc/install) installed and then you can simply clone this repo, go into it and execute `go run install/install.go`
+```bash
+git clone https://github.com/BasileBux/Kenzan.git
+cd Kenzan
+go run install/install.go
+```
+
+Or if you want to do it manually, you need [golang](https://go.dev/doc/install) installed on your machine. Clone the repo, execute `go mod tidy` in the directory and build it with go. You will also need to create a directory in your system's default cache directory. 
 
 To run it, Just execute the program and provide the path to the file you want to edit. If you don't give a file, it will open a blank file which won't be able to be saved. The text editor cannot create a new file yet.
 
 ## Todo
 
-- `Delete key` normal behavior
+- Line numbers don't work on empty files +break
 - Change between indentation with tabs and spaces + modify sizes -> indent guides
 - Text Selection
 - Copy / Paste

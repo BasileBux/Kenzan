@@ -44,6 +44,7 @@ func enter(text *[]string, state *t.ProgramState, style *st.WindowStyle) {
 		state.Terminate = true
 		return
 	}
+	state.Update.Cursor = true
 	state.Update.SyntaxHighlight = true
 	state.SaveState = false
 

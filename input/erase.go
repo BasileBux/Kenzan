@@ -9,6 +9,7 @@ import (
 // Behaves exactly like "x" in vim
 func erase(text *[]string, state *t.ProgramState, style *st.WindowStyle) {
 	state.Update.SyntaxHighlight = true
+	state.Update.Cursor = true
 	state.SaveState = false
 	state.ForceQuit = false
 	if state.Nav.AbsoluteSelectedRow > len((*text)[state.Nav.SelectedLine]) {
@@ -27,14 +28,6 @@ func erase(text *[]string, state *t.ProgramState, style *st.WindowStyle) {
 	state.Nav.SelectedRow = state.Nav.AbsoluteSelectedRow
 }
 
-/*
-*  BUG: complete freeze in ../syntax_highlighting_samples/main.c on line 14
-*		when erasing ']' in "*argv[])" -> only when there is '[' on the left of it and
-*		no ')' on the right of it.
-
-*	#DEBUGGING PROCESS:
-*		- Not inside of erase() or backspace() function
- */
 func backspace(text *[]string, state *t.ProgramState, style *st.WindowStyle) {
 	if len((*text)[state.Nav.SelectedLine]) <= 0 {
 		state.Nav.AbsoluteSelectedRow = 0
@@ -60,8 +53,12 @@ func backspace(text *[]string, state *t.ProgramState, style *st.WindowStyle) {
 		state.Nav.SelectedRow = state.Nav.AbsoluteSelectedRow
 		return
 	}
+	prevSel := state.Nav.AbsoluteSelectedRow
 	erase(text, state, style)
-	state.Nav.AbsoluteSelectedRow--
+	newSel := state.Nav.AbsoluteSelectedRow
+	if prevSel == newSel {
+		state.Nav.AbsoluteSelectedRow--
+	}
 	state.Nav.SelectedRow = state.Nav.AbsoluteSelectedRow
 }
 

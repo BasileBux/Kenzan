@@ -75,8 +75,14 @@ func tab(text *[]string, state *t.ProgramState, style *st.WindowStyle) {
 	state.ForceQuit = false
 	begin := (*text)[state.Nav.SelectedLine][:state.Nav.SelectedRow]
 	end := (*text)[state.Nav.SelectedLine][state.Nav.SelectedRow:]
-	(*text)[state.Nav.SelectedLine] = begin + strings.Repeat(" ", 4) + end
-	state.Nav.AbsoluteSelectedRow += 4
-	state.Nav.SelectedRow = state.Nav.AbsoluteSelectedRow
-	r.ScrollRight(4, state, style)
+	if state.Indent.Type == st.SPACES {
+		(*text)[state.Nav.SelectedLine] = begin + strings.Repeat(" ", state.Indent.Size) + end
+		state.Nav.AbsoluteSelectedRow += state.Indent.Size
+		state.Nav.SelectedRow = state.Nav.AbsoluteSelectedRow
+	} else {
+		(*text)[state.Nav.SelectedLine] = begin + "\t" + end
+		state.Nav.AbsoluteSelectedRow++
+		state.Nav.SelectedRow = state.Nav.AbsoluteSelectedRow
+	}
+	r.ScrollRight(state.Indent.Size, state, style)
 }

@@ -67,6 +67,11 @@ type Settings struct {
 	LineHighlight *bool `json:"line_highlight,omitempty"`
 	HighDpi       *bool `json:"high_dpi,omitempty"`
 	Fps           *int  `json:"fps,omitempty"`
+
+	Indentation struct {
+		Type *string `json:"type,omitempty"`
+		Size *int    `json:"size,omitempty"`
+	} `json:"indentation,omitempty"`
 }
 
 //go:embed default.json
@@ -161,10 +166,10 @@ func MergeSettings(defaults *Settings, user *Settings) *Settings {
 	if user.FontSpacing != nil {
 		merged.FontSpacing = user.FontSpacing
 	}
-	if user.ScrollPadding != nil {
+	if user.ScrollPadding != nil && *user.ScrollPadding >= 0 {
 		merged.ScrollPadding = user.ScrollPadding
 	}
-	if user.CursorRatio != nil {
+	if user.CursorRatio != nil && (*user.CursorRatio > 0 && *user.CursorRatio <= 1) {
 		merged.CursorRatio = user.CursorRatio
 	}
 	if user.Theme != nil {
@@ -184,7 +189,7 @@ func MergeSettings(defaults *Settings, user *Settings) *Settings {
 	if user.LineNumbers.PaddingRight != nil {
 		merged.LineNumbers.PaddingRight = user.LineNumbers.PaddingRight
 	}
-	if user.LineNumbers.LineWidth != nil {
+	if user.LineNumbers.LineWidth != nil && *user.LineNumbers.LineWidth >= 0 {
 		merged.LineNumbers.LineWidth = user.LineNumbers.LineWidth
 	}
 	if user.LineNumbers.OffsetCurrent != nil {
@@ -197,8 +202,17 @@ func MergeSettings(defaults *Settings, user *Settings) *Settings {
 	if user.HighDpi != nil {
 		merged.HighDpi = user.HighDpi
 	}
-	if user.Fps != nil {
+	if user.Fps != nil && *user.Fps > 0 {
 		merged.Fps = user.Fps
+	}
+
+	// Indentation
+	if user.Indentation.Type != nil && (*user.Indentation.Type == "tabs" ||
+		*user.Indentation.Type == "spaces") {
+		merged.Indentation.Type = user.Indentation.Type
+	}
+	if user.Indentation.Size != nil && *user.Indentation.Size > 0 {
+		merged.Indentation.Size = user.Indentation.Size
 	}
 
 	cache := c.Cache(c.CachePayload{FontName: *merged.FontFamily})

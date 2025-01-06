@@ -1,6 +1,7 @@
 # Install
 
-This file describes how the install script works and what it does. There are two scripts. One for linux and macOS and one for windows. 
+This file describes how the install script works and what it does. There are two scripts. 
+One for linux and macOS and one for windows. 
 
 - Downloading binary in correct OS dir
 - Creating kenzan folder in config and cache (OS dependent)

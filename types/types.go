@@ -1,6 +1,7 @@
 package types
 
 import (
+	st "github.com/basilebux/kenzan/settings"
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
@@ -52,6 +53,12 @@ type ProgramState struct {
 	Cache          Cache
 	Terminate      bool
 	HighlightErr   error
+	Indent         Indentation
+}
+
+type Indentation struct {
+	Type st.IndentationType
+	Size int
 }
 
 type Cache struct {

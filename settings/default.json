@@ -22,5 +22,8 @@
   "line_highlight": true,
   "high_dpi": true,
   "fps": 60,
-  "performance_display": false
+  "indentation": {
+    "type": "tabs",
+    "size": 4
+  }
 }

@@ -1,6 +1,7 @@
 # Cache docs
 
-This file describes how cache files are formatted and how they are used in the text editor. The cache is a json file stored in system default cache path: 
+This file describes how cache files are formatted and how they are used in the text editor. 
+The cache is a json file stored in system default cache path: 
 - Linux: `~/.cache/kenzan/cache.json`
 - MacOS: `~/Library/Caches/kenzan/cache.json`
 - Windows: `C:\Users\<Username>\AppData\Local\kenzan\cache.json`

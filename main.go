@@ -130,6 +130,10 @@ func main() {
 			Y: float32(rl.GetRenderHeight())},
 		Terminate:    false,
 		HighlightErr: nil,
+		Indent: t.Indentation{
+			Type: st.GetIndentationType(*settings.Indentation.Type),
+			Size: *settings.Indentation.Size,
+		},
 	}
 
 	// Weird behavior with size doubled on macOS
@@ -203,7 +207,7 @@ func main() {
 		}
 
 		if state.Update.Cursor || state.Update.SyntaxHighlight {
-			r.CalculateCursorPos(userText, &nav, &state.Cache, &userStyle)
+			r.CalculateCursorPos(userText, &nav, state.Indent.Size, &state.Cache, &userStyle)
 		}
 
 		if *settings.LineHighlight {

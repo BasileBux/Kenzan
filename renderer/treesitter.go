@@ -38,11 +38,11 @@ func RenderText(lang t.Language, text *string, state *t.ProgramState, style *st.
 			}
 		}
 		if state.HighlightErr != nil {
-			noSyntaxHighlight(text, &state.Nav.ScrollOffset, style)
+			noSyntaxHighlight(text, state.Indent.Size, &state.Nav.ScrollOffset, style)
 		} else {
 			renderHighlight(state, style)
 		}
 	} else {
-		noSyntaxHighlight(text, &state.Nav.ScrollOffset, style)
+		noSyntaxHighlight(text, state.Indent.Size, &state.Nav.ScrollOffset, style)
 	}
 }

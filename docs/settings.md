@@ -129,7 +129,7 @@ positive `integer` values (can be 0)
 
 #### Options
 
-Positive `integer` values. If the value is too small or too big, it will just look ugly
+`integer` values. If the value is too small or too big, it will just look ugly
 
 ### Padding right
 
@@ -139,13 +139,17 @@ Positive `integer` values. If the value is too small or too big, it will just lo
 
 #### Options
 
-Positive `integer` values. If the value is too small or too big, it will just look ugly
+`integer` values. If the value is too small or too big, it will just look ugly
 
 ### Line width
 
 - Description: Width of the line separating line numbers from text
 - Setting: `line_width`
 - Default: 0
+
+#### Options
+
+Positive `integer` values. Set to 0 to remove line
 
 ### Offset current
 
@@ -156,10 +160,6 @@ Positive `integer` values. If the value is too small or too big, it will just lo
 #### Options
 
 `boolean`
-
-#### Options
-
-Positive `integer` values. Set to 0 to remove line
 
 ## Line highlight
 
@@ -191,12 +191,30 @@ Positive `integer` values. Set to 0 to remove line
 
 Non-null positive `integers`. 
 
-## Performance display
+## Indentation
 
-- Description: Show performance display
-- Settings: `performance_display`
-- Default: false
+- Description: Section which handles indentation options
+- Setting: `indentation`
+
+### Type
+
+- Description: Set indentation as spaces or tabs
+- Setting: `type`
+- Default: "tabs"
 
 #### Options
 
-`boolean`
+A `string` of these: 
+- "tabs"
+- "spaces"
+
+### Size
+
+- Description: Size of tab symbol
+- Setting: `size`
+- Default: 4
+
+#### Options
+
+Positive non-null `integers`
+

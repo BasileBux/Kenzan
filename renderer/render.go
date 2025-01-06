@@ -46,6 +46,8 @@ func removeTrailingSpaces(input string) string {
 }
 
 func calculateOffset(cursor *t.TextRenderCursor, text *string, state *t.ProgramState, style *st.WindowStyle) t.TextRenderCursor {
+	tabRender := strings.Repeat(" ", state.Indent.Size)
+	*text = strings.Replace(*text, "\t", tabRender, -1)
 	textSize := rl.MeasureTextEx(style.Font, *text, style.FontSize, style.FontSpacing)
 
 	if strings.Contains(*text, "\n") {
@@ -58,6 +60,11 @@ func calculateOffset(cursor *t.TextRenderCursor, text *string, state *t.ProgramS
 		*text = begin + end
 
 		textSize = rl.MeasureTextEx(style.Font, *text, style.FontSize, style.FontSpacing)
+		if len(*text) <= 0 {
+			*text = " "
+			textSize = rl.MeasureTextEx(style.Font, *text, style.FontSize, style.FontSpacing)
+			textSize.X = -1
+		}
 		cursor.Line += textSize.Y + style.FontSpacing
 		cursor.Row = style.PaddingLeft
 	}
@@ -69,7 +76,9 @@ func calculateOffset(cursor *t.TextRenderCursor, text *string, state *t.ProgramS
 	return result
 }
 
-func noSyntaxHighlight(text *string, scrollOffset *rl.Vector2, style *st.WindowStyle) {
+func noSyntaxHighlight(text *string, indentSize int, scrollOffset *rl.Vector2, style *st.WindowStyle) {
+	tabRender := strings.Repeat(" ", indentSize)
+	*text = strings.Replace(*text, "\t", tabRender, -1)
 	scrollHeight := (scrollOffset.Y * style.CharSize.Y) + (scrollOffset.Y * style.FontSpacing)
 	scrollWidth := (scrollOffset.X * style.CharSize.X) + (scrollOffset.X * style.FontSpacing)
 	textPos := rl.NewVector2(style.PaddingLeft-scrollWidth, style.PaddingTop-scrollHeight)

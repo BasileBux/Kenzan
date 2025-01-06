@@ -9,6 +9,9 @@ import (
 	tree_sitter "github.com/tree-sitter/go-tree-sitter"
 )
 
+// Fallback to no syntax highlighting when exceding this number
+const MAX_ERROR_NB = 15
+
 func syntaxHighlightingC(node *tree_sitter.Node, code []byte, state *t.ProgramState, style *st.WindowStyle) error {
 	cursor := node.Walk()
 	defer cursor.Close()
@@ -23,13 +26,18 @@ func syntaxHighlightingC(node *tree_sitter.Node, code []byte, state *t.ProgramSt
 	}
 
 	lastFinish := uint(0)
+	errorNb := 0
 
 	for i := uint32(0); !(cursor.Node().KindId() == 161 && i > 1); i++ {
 		cursor.GotoDescendant(i)
 		start, finish := cursor.Node().ByteRange()
 
+		// Prevent an infinite loop on an error
 		if cursor.Node() == nil || cursor.Node().KindId() == 65535 {
-			return fmt.Errorf("Error while parsing AST")
+			if errorNb >= MAX_ERROR_NB {
+				return fmt.Errorf("Error while parsing AST")
+			}
+			errorNb++
 		}
 
 		if start > lastFinish {

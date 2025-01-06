@@ -45,7 +45,6 @@ The text editor cannot create a new file yet.
 
 ## Todo
 
-- Make syntax errors only fallback on multiple errors
 - Change font fallback GeistMono -> JetBrainsMono
 - Text Selection
 - Copy / Paste

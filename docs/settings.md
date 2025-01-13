@@ -20,7 +20,7 @@ This file structure is copied from the [zed docs](https://zed.dev/docs/configuri
 
 - Description: Space between text and edge of the window.
 - Setting: `padding`
-- Default: 1, 1, 1, 2
+- Default: 1, 1, 1, 0
 
 #### Options
 
@@ -31,8 +31,8 @@ Sub-settings: `top`, `right`, `bottom`, `left`
 "padding": {
     "top": 1,
     "right": 1,
-	"bottom": 1,
-	"left": 2
+    "bottom": 1,
+    "left": 0
 },
 ```
 

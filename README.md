@@ -43,17 +43,6 @@ To run it, Just execute the program and provide the path to the file you want to
 If you don't give a file, it will open a blank file which won't be able to be saved. 
 The text editor cannot create a new file yet.
 
-## Todo
-
-- Change font fallback GeistMono -> JetBrainsMono
-- Text Selection
-- Copy / Paste
-- Mouse support (click, select, scroll)
-- Change cursor shape
-- Add indent guides
-- Implement vim motions (basic)
-- ...
-
 ## Issues
 
 - Weird padding on certain machines ? Env vars ? Debug build ?

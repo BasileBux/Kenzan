@@ -231,12 +231,12 @@ func main() {
 			userStyle.ColorTheme.Editor.Fg,
 		)
 
-		if state.Update.Cursor {
-			r.CalculateLineNbPositions(*settings.LineNumbers.Relative, &userText, &state, &userStyle)
-		}
-
 		if *settings.LineNumbers.Show {
 			r.RenderLineNumbers(&state, &userStyle)
+		}
+
+		if state.Update.Cursor {
+			r.CalculateLineNbPositions(*settings.LineNumbers.Relative, &userText, &state, &userStyle)
 		}
 
 		state.Update.Reset()

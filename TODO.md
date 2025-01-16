@@ -1,5 +1,6 @@
 # To do
 
+- Text Selection
 - Copy / Paste
 - Mouse support (click, select, scroll)
 - Change cursor shape
@@ -8,4 +9,4 @@
 - ...
 
 # Current steps
-- Text Selection
+- Install script

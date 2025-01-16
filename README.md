@@ -29,6 +29,8 @@ you can find the font and license in the [/fonts/JetBrainsMono/](https://github.
 
 You can build it from source. You will just need to have [golang](https://go.dev/doc/install) 
 installed and then you can simply clone this repo, go into it and execute `go run install/install.go`
+> [!WARNING]
+> The install script has no implementation at the moment. It is the next step in the project.
 ```bash
 git clone https://github.com/BasileBux/Kenzan.git
 cd Kenzan

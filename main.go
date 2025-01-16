@@ -15,7 +15,7 @@ import (
 	rl "github.com/gen2brain/raylib-go/raylib"
 )
 
-func RedirectLogs() {
+func redirectLogs() {
 	logFile, err := os.OpenFile("raylib.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		fmt.Println(err)
@@ -25,6 +25,10 @@ func RedirectLogs() {
 	rl.SetTraceLogCallback(func(msgType int, text string) {
 		fmt.Fprintf(logFile, "%s\n", text)
 	})
+}
+
+func removeLogs() {
+	rl.SetTraceLogCallback(func(msgType int, text string) {})
 }
 
 func main() {
@@ -52,7 +56,9 @@ func main() {
 		fileLanguage = f.GetFileExtension(os.Args[1])
 	}
 
-	RedirectLogs()
+	// WARNING: Make some kind of log activation with env var or something like that
+	// redirectLogs()
+	removeLogs()
 
 	settings, err := st.LoadAllSettings()
 	if err != nil {

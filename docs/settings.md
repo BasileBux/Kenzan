@@ -40,7 +40,7 @@ Sub-settings: `top`, `right`, `bottom`, `left`
 
 - Description: Font family to use in the editor
 - Setting: `font_family`
-- Default: ""
+- Default: "" (for info on fallback font, refer to /docs/fonts.md)
 
 #### Options
 

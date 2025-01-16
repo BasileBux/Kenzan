@@ -10,7 +10,7 @@ import (
 	u "github.com/basilebux/kenzan/utils"
 )
 
-const FALLBACK_FONT string = "kenzan/fonts/GeistMono-Regular.otf"
+const FALLBACK_FONT string = "kenzan/fonts/JetBrainsMono-Medium.ttf"
 
 type font struct {
 	Path   string

@@ -17,9 +17,9 @@ but not yet. So if you type non-ascii characters, they will simply be ignored
 
 ## Fallback font
 
-As fallback font, I chose the [Geist mono font](https://vercel.com/font). I do not own 
+As fallback font, I chose the [JetBrains Mono](https://www.jetbrains.com/lp/mono/). I do not own 
 the font in any way. The font is licensed under the SIL Open Font License. For more information, 
-you can find the font and license in the [/fonts/GeistMono/](https://github.com/BasileBux/Kenzan/blob/main/fonts/GeistMono/) folder. 
+you can find the font and license in the [/fonts/JetBrainsMono/](https://github.com/BasileBux/Kenzan/blob/main/fonts/JetBrainsMono/) folder.
 
 ### Supported language syntax highlighting
 

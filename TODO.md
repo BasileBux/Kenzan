@@ -1,6 +1,5 @@
 # To do
 
-- Text Selection
 - Copy / Paste
 - Mouse support (click, select, scroll)
 - Change cursor shape
@@ -9,4 +8,4 @@
 - ...
 
 # Current steps
-- Change font fallback GeistMono -> JetBrainsMono
+- Text Selection

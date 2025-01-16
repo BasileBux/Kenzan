@@ -9,8 +9,8 @@ Getting the file path from the font name, is really heavy so it should be made t
 The only font types supported are `.ttf` and `.otf`
 
 The fallback font is located in `~/.config/kenzan/fonts/`. I chose the 
-[GeistMono font](https://vercel.com/font). I do not own the font, I just really enjoy it. 
-You can find the license to that font under `./fonts/GeistMono/OFL.txt` in the repo. 
+[JetBrains Mono font](https://www.jetbrains.com/lp/mono/). I do not own the font, I just really enjoy it. 
+You can find the license to that font under `./fonts/JetBrainsMono/OFL.txt` in the repo. 
 
 ## Linux
 
